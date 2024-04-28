@@ -7,7 +7,7 @@ export async function GET() {
 
   const url = getDumpUrl();
 
-  if (!url) return null;
+  if (!url) return new Response("No data yet");
 
   try {
     const response = await fetch(url, {
@@ -21,6 +21,8 @@ export async function GET() {
 
       return new Response(text);
     }
+
+    return new Response("No data yet");
   } catch (err) {
     console.log("Could not download dump");
     return new Response("Could not download dump", { status: 500 });
