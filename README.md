@@ -8,6 +8,24 @@ WIP
 
 ## Quickstart
 
+Create a parent schema database
+
+```bash
+turso db create [database-name] --type schema
+```
+
+Shell into the parent schema database
+
+```bash
+turso db shell [database-name]
+```
+
+Add a `todos` table to the parent schema database
+
+```sql
+CREATE TABLE todos (id INTEGER PRIMARY KEY AUTOINCREMENT, description);
+```
+
 Create a `.env.local` file in the root of the project with the following content:
 
 ```md
