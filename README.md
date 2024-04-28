@@ -4,6 +4,8 @@ WIP
 
 ## Demo
 
+[https://turso-platforms-starter.vercel.app](https://turso-platforms-starter.vercel.app/)
+
 ## Quickstart
 
 Create a `.env.local` file in the root of the project with the following content:
