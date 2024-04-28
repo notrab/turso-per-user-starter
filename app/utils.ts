@@ -76,3 +76,8 @@ function getLibsqlUrl() {
   const url = getDatabaseUrl();
   return url ? `libsql://${url}` : null;
 }
+
+export function getDumpUrl() {
+  const url = getDatabaseUrl();
+  return url ? `https://${url}/dump` : null;
+}

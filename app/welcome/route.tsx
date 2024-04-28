@@ -14,8 +14,6 @@ export async function GET() {
 
   const databaseExists = await checkDatabaseExists();
 
-  console.log("existing db?", databaseExists);
-
   if (databaseExists) {
     return redirect("/dashboard");
   }

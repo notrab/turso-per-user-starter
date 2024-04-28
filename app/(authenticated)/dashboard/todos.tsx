@@ -16,5 +16,7 @@ export async function Todos() {
 
   if (!rows || rows.length === 0) return null;
 
-  return rows.map((todo, index) => <Todo key={index} item={todo} />);
+  return rows.map((todo, index) => (
+    <Todo key={index} item={{ id: todo.id, description: todo.description }} />
+  ));
 }
