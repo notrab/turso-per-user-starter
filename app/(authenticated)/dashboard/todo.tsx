@@ -12,7 +12,7 @@ export function Todo({ item }: { item: TodoItem }) {
       <div className="flex w-full items-center space-x-3 ">
         <button
           className="p-1 text-3xl"
-          onClick={() => alert("Implement later")}
+          onClick={() => alert("lol its a demo")}
         >
           ☑️
         </button>

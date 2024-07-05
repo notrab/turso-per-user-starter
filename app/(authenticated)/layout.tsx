@@ -15,7 +15,7 @@ export default async function Layout({
 
   return (
     <>
-      <header className="bg-neutral-900">
+      <header>
         <div className="max-w-5xl mx-auto px-6">
           <div className="flex justify-between items-center h-32">
             <div className="flex items-center gap-x-3">

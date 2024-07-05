@@ -16,7 +16,7 @@ export function Form() {
         await addTodo(formData);
         formRef.current?.reset();
       }}
-      className="flex items-center justify-between rounded-md bg-neutral-500 p-3 shadow-sm"
+      className="flex items-center justify-between rounded-md bg-neutral-500 p-6 shadow-sm"
       ref={formRef}
     >
       <div className="flex w-full items-center space-x-3">
