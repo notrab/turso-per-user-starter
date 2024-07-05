@@ -21,6 +21,17 @@ export default function RootLayout({
       <html lang="en">
         <body className={`bg-neutral-900 overscroll-none ${inter.className}`}>
           {children}
+
+          <div className="text-center">
+            <a
+              href="https://github.com/notrab/turso-platforms-starter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-[#4FF8D2] transition"
+            >
+              Get the code
+            </a>
+          </div>
         </body>
       </html>
     </ClerkProvider>
