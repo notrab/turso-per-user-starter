@@ -6,50 +6,76 @@ A Next.js application that demonstrates how to use the [Turso](https://turso.tec
 
 [https://turso-platforms-starter.vercel.app](https://turso-platforms-starter.vercel.app/)
 
-## Quickstart
+## Setup
 
 1. Create a parent schema database with Turso:
 
 [![Create Database](https://sqlite.new/button)](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-platforms-starter%2Fmain%2Fsql.dump&type=schema)
 
-2. `cp .env.example .env.local` and configure the environment variables:
+2. `cp .env.example .env.local`, add your Turso username (GitHub or custom) and database name to it:
 
 ```bash
-# Sign up to Clerk
+TURSO_SCHEMA_DATABASE_NAME=
+```
 
+3. Sign up to Clerk
+
+Add your Clerk public key and secret key to the `.env.local` file:
+
+```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
+```
 
-# Create a new Clerk webhook (user.created event) with your app URL
-# and append /webhooks/clerk
-#
-# Set the webhook secret below provided by Clerk
+4. Create a new Clerk webhook
+
+Make sure to use the `user.created` event, and pass it your production or local URL (using ngrok). Append `/webhooks/clerk` to the URL.
+
+5. Set the webhook secret in the `.env.local` file:
+
+```bash
 CLERK_WEBHOOK_SECRET=
+```
 
-# turso auth api-tokens mint clerk
-TURSO_USER_API_TOKEN=
+6. Create a new group token with Turso
 
-# your personal or organization name
-TURSO_ORG_NAME=
+You can use the Turso Dashboard, or [install the Turso CLI](https://docs.turso.tech/cli/installation) and run:
 
-# database name from step 1
-TURSO_SCHEMA_DATABASE_NAME=
+```bash
+turso group tokens create <group-name>
+```
 
-# turso group tokens create <group-name>
+Set the group token in the `.env.local` file:
+
+```bash
 TURSO_DATABASE_GROUP_AUTH_TOKEN=
 ```
 
-3. Install dependencies:
+7. Create a Turso API Token using the Dashboard, or CLI:
+
+```bash
+turso auth api-tokens mint clerk
+```
+
+Set the API token in the `.env.local` file:
+
+```bash
+TURSO_USER_API_TOKEN=
+```
+
+8. Install dependencies:
 
 ```bash
 npm install
 ```
 
-4. Run the development server:
+9. Run the development server:
 
 ```bash
 npm run dev
 ```
+
+10. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Tech Stack
 
@@ -58,3 +84,7 @@ npm run dev
 - [Tailwind CSS](https://tailwindcss.com)
 - [Clerk](https://clerk.com)
 - [Vercel](https://vercel.com)
+
+## Need help?
+
+[Join us on Discord](https://tur.so/discord)
