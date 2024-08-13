@@ -77,6 +77,12 @@ npm run dev
 
 10. **Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.**
 
+## Deploy to production
+
+When you're ready to deploy to production, make sure to configure Clerk for production, and deploy the app to Vercel:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnotrab%2Fturso-platforms-starter&env=NEXT_PUBLIC_CLERK_SIGN_IN_URL,NEXT_PUBLIC_CLERK_SIGN_UP_URL,NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,CLERK_WEBHOOK_SECRET,TURSO_USER_API_TOKEN,TURSO_ORG_NAME,TURSO_SCHEMA_DATABASE_NAME,TURSO_DATABASE_GROUP_AUTH_TOKEN)
+
 ## Tech Stack
 
 - [Turso](https://turso.tech)
