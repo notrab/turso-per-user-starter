@@ -7,4 +7,3 @@ CREATE TABLE todos (
 );
 
 COMMIT;
-PRAGMA foreign_keys=ON;

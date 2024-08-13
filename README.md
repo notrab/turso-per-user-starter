@@ -12,7 +12,7 @@ A Next.js application that demonstrates how to use the [Turso](https://turso.tec
 
 1. **Create a parent schema database with Turso:**
 
-[![Create Database](https://sqlite.new/button)](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-platforms-starter%2Fmain%2Fsql.dump&type=schema)
+[![Create Database](https://sqlite.new/button)](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-platforms-starter%2Fmain%2Fdump.sql&type=schema)
 
 2. **Run `cp .env.example .env.local`, add your Turso username (GitHub or custom) and database name to it:**
 
