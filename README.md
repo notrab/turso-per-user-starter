@@ -2,6 +2,8 @@
 
 A Next.js application that demonstrates how to use the [Turso](https://turso.tech) Platforms API to create a database per user.
 
+![Turso Platforms Starter](/app/opengraph-image.png)
+
 ## Demo
 
 [https://turso-platforms-starter.vercel.app](https://turso-platforms-starter.vercel.app/)
