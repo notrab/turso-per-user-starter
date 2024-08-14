@@ -3,6 +3,9 @@ import { createClient as createLibsqlClient } from "@libsql/client";
 import { createClient as createTursoClient } from "@tursodatabase/api";
 import md5 from "md5";
 import { redirect } from "next/navigation";
+import { drizzle } from "drizzle-orm/libsql";
+
+import * as schema from "@/db/schema";
 
 const turso = createTursoClient({
   token: process.env.TURSO_USER_API_TOKEN!,
@@ -46,10 +49,13 @@ export async function getDatabaseClient() {
   }
 
   try {
-    return createLibsqlClient({
-      url,
-      authToken: process.env.TURSO_DATABASE_GROUP_AUTH_TOKEN || "",
-    });
+    return drizzle(
+      createLibsqlClient({
+        url,
+        authToken: process.env.TURSO_DATABASE_GROUP_AUTH_TOKEN,
+      }),
+      { schema },
+    );
   } catch (error) {
     console.error("Failed to create database client:", error);
     return null;
@@ -58,7 +64,9 @@ export async function getDatabaseClient() {
 
 export function getDatabaseName() {
   const userId = auth().userId;
+
   if (!userId) return null;
+
   return md5(userId);
 }
 

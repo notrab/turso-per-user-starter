@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-
-import { getDatabaseClient, getDumpUrl } from "@/app/utils";
+import * as schema from "@/db/schema";
+import { getDatabaseClient } from "@/app/utils";
+import { eq } from "drizzle-orm";
 
 export type TodoItem = {
   id: number;
@@ -16,9 +17,8 @@ export const addTodo = async (formData: FormData) => {
 
   if (!client) return null;
 
-  await client.execute({
-    sql: "INSERT INTO todos (description) VALUES (?)",
-    args: [description],
+  await client.insert(schema.todos).values({
+    description,
   });
 
   revalidatePath("/dashboard");
@@ -29,10 +29,7 @@ export const removeTodo = async (id: number) => {
 
   if (!client) return null;
 
-  await client.execute({
-    sql: "DELETE FROM todos WHERE id = ?",
-    args: [id],
-  });
+  await client.delete(schema.todos).where(eq(schema.todos.id, id));
 
   revalidatePath("/dashboard");
 };
