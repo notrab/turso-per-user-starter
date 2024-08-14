@@ -10,74 +10,91 @@ A Next.js application that demonstrates how to use the [Turso](https://turso.tec
 
 ## Setup
 
-1. **Create a parent schema database with Turso:**
+1. Create a new SQLite multi-db schema database with Turso:
 
-[![Create Database](https://sqlite.new/button)](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-platforms-starter%2Fmain%2Fdump.sql&type=schema)
+```bash
+turso db create <database-name> --schema
+```
 
-2. **Run `cp .env.example .env.local`, add your Turso username (GitHub or custom) and database name to it:**
+2. Create a new group token:
+
+Create a new token that can access all databases in your group:
+
+```bash
+turso group tokens create <group-name>
+```
+
+> [!NOTE]
+> If you didn't already have one, a new group will be created for you with the name `default`.
+
+2. **Run `cp .env.example .env`**
+
+Add your database name, group token, and Turso organization name to the `.env` file:
 
 ```bash
 TURSO_SCHEMA_DATABASE_NAME=
+TURSO_DATABASE_GROUP_AUTH_TOKEN=
+TURSO_ORG_NAME=
 ```
 
-3. **[Sign up to Clerk](https://clerk.com)**
+> [!NOTE]
+> The `TURSO_ORG_NAME` can be your personal username, or the name of any organization you have with other users.
 
-Add your Clerk public key and secret key to the `.env.local` file:
+3. Migrate the database
+
+Run the following command to create the tables in the database:
+
+```bash
+npm run db:migrate
+```
+
+> [!NOTE]
+> If you make changes to `db/schema.ts`, make sure to run `npm run db:generate` to create the migrations, and `npm run db:migrate` to apply them.
+
+4. **[Sign up to Clerk](https://clerk.com)**
+
+Add your Clerk public key and secret key to the `.env` file:
 
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 ```
 
-4. **Create a new Clerk webhook**
+5. **Create a new Clerk webhook**
 
 Make sure to use the `user.created` event, and pass it your production or local URL (using ngrok). Append `/webhooks/clerk` to the URL.
 
-5. **Set the webhook secret in the `.env.local` file:**
+5. **Set the webhook secret in the `.env` file:**
 
 ```bash
 CLERK_WEBHOOK_SECRET=
 ```
 
-6. **Create a new group token with Turso**
-
-You can use the Turso Dashboard, or [install the Turso CLI](https://docs.turso.tech/cli/installation) and run:
-
-```bash
-turso group tokens create <group-name>
-```
-
-Set the group token in the `.env.local` file:
-
-```bash
-TURSO_DATABASE_GROUP_AUTH_TOKEN=
-```
-
-7. **Create a Turso API Token using the Dashboard, or CLI:**
+6. **Create a Turso API Token:**
 
 ```bash
 turso auth api-tokens mint clerk
 ```
 
-Set the API token in the `.env.local` file:
+Set the API token in the `.env` file:
 
 ```bash
 TURSO_USER_API_TOKEN=
 ```
 
-8. **Install dependencies:**
+7. **Install dependencies:**
 
 ```bash
 npm install
 ```
 
-9. **Run the development server:**
+8. **Run the development server:**
 
 ```bash
 npm run dev
 ```
 
-10. **Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.**
+9. **Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.**
 
 ## Deploy to production
 
@@ -88,6 +105,7 @@ When you're ready to deploy to production, make sure to configure Clerk for prod
 ## Tech Stack
 
 - [Turso](https://turso.tech)
+- [Drizzle ORM/Kit](https://orm.drizzle.team)
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Clerk](https://clerk.com)
