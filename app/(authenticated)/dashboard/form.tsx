@@ -16,7 +16,7 @@ export function Form() {
         await addTodo(formData);
         formRef.current?.reset();
       }}
-      className="flex items-center justify-between rounded-md bg-neutral-500 p-6 shadow-sm"
+      className="flex items-center justify-between rounded bg-brunswick-green p-6 shadow-sm"
       ref={formRef}
     >
       <div className="flex w-full items-center space-x-3">
@@ -25,7 +25,7 @@ export function Form() {
           id="description"
           name="description"
           placeholder="Insert new todo"
-          className="w-full text-white bg-neutral-500 placeholder:text-white outline-none"
+          className="w-full text-white bg-transparent placeholder:text-white/30 outline-none"
           required
           aria-label="Description of todo"
           type="text"
