@@ -22,7 +22,7 @@ npm install
 </details>
 
 <details>
-<summary>1. Create a new SQLite multi-db schema database with Turso</summary>
+<summary>2. Create a new SQLite multi-db schema database with Turso</summary>
 
 Run the following:
 
@@ -33,7 +33,7 @@ turso db create <database-name> --schema
 </details>
 
 <details>
-<summary>2. Create a new group token</summary>
+<summary>3. Create a new group token</summary>
 
 Run the following:
 
@@ -47,7 +47,7 @@ turso db create <database-name> --schema
 </details>
 
 <details>
-<summary>3. Configure environment variables</summary>
+<summary>4. Configure environment variables</summary>
 
 Run the following:
 
@@ -69,7 +69,7 @@ TURSO_ORG_NAME=
 </details>
 
 <details>
-<summary>4. Migrate the database</summary>
+<summary>5. Migrate the database</summary>
 
 Run the following:
 
@@ -83,7 +83,7 @@ npm run db:migrate
 </details>
 
 <details>
-<summary>4. Configure Clerk</summary>
+<summary>6. Configure Clerk</summary>
 
 [Sign up to Clerk](https://clerk.com) and create a new application.
 
@@ -97,7 +97,7 @@ CLERK_SECRET_KEY=
 </details>
 
 <details>
-<summary>5. Create a new Clerk webhook</summary>
+<summary>7. Create a new Clerk webhook</summary>
 
 Make sure to use the `user.created` event, and pass it your app URL. Make sure to append `/webhooks/clerk`.
 
@@ -113,7 +113,7 @@ CLERK_WEBHOOK_SECRET=
 </details>
 
 <details>
-<summary>6. Create a new Turso API Token</summary>
+<summary>8. Create a new Turso API Token</summary>
 
 Run the following:
 
@@ -130,7 +130,7 @@ TURSO_USER_API_TOKEN=
 </details>
 
 <details>
-<summary>7. Run the application locally</summary>
+<summary>9. Run the application locally</summary>
 
 Run the following:
 
