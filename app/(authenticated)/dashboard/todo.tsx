@@ -1,10 +1,13 @@
 "use client";
 
 import { useTransition } from "react";
+import { InferSelectModel } from "drizzle-orm";
+import * as schema from "@/db/schema";
+import { removeTodo } from "./actions";
 
-import { removeTodo, type TodoItem } from "./actions";
+type Todo = InferSelectModel<typeof schema.todos>;
 
-export function Todo({ item }: { item: TodoItem }) {
+export function Todo({ item }: { item: Todo }) {
   const [_, startTransition] = useTransition();
 
   return (

@@ -1,7 +1,6 @@
 import { getDatabaseClient } from "@/app/utils";
 
 import { Todo } from "./todo";
-import { type TodoItem } from "./actions";
 
 export async function Todos() {
   const client = await getDatabaseClient();
@@ -10,13 +9,11 @@ export async function Todos() {
     return <p>No such table `todos`</p>;
   }
 
-  const result = await client.execute("SELECT * FROM todos");
+  const todos = await client.query.todos.findMany();
 
-  const rows = result.rows as unknown as Array<TodoItem>;
+  if (!todos || todos.length === 0) return null;
 
-  if (!rows || rows.length === 0) return null;
-
-  return rows.map((todo, index) => (
+  return todos.map((todo, index) => (
     <Todo key={index} item={{ id: todo.id, description: todo.description }} />
   ));
 }
