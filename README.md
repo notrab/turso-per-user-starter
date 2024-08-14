@@ -10,24 +10,33 @@ A Next.js application that demonstrates how to use the [Turso](https://turso.tec
 
 ## Setup
 
-1. Create a new SQLite multi-db schema database with Turso:
+<details>
+<summary>1. Create a new SQLite multi-db schema database with Turso</summary>
 
 ```bash
 turso db create <database-name> --schema
 ```
 
-2. Create a new group token:
+</details>
 
-Create a new token that can access all databases in your group:
+<details>
+<summary>2. Create a new group token</summary>
 
 ```bash
-turso group tokens create <group-name>
+turso db create <database-name> --schema
 ```
 
 > [!NOTE]
 > If you didn't already have one, a new group will be created for you with the name `default`.
 
-2. **Run `cp .env.example .env`**
+</details>
+
+<details>
+<summary>3. Configure environment variables</summary>
+
+```bash
+cp .env.example .env
+```
 
 Add your database name, group token, and Turso organization name to the `.env` file:
 
@@ -40,7 +49,9 @@ TURSO_ORG_NAME=
 > [!NOTE]
 > The `TURSO_ORG_NAME` can be your personal username, or the name of any organization you have with other users.
 
-3. Migrate the database
+</details>
+
+<summary>4. Migrate the database</summary>
 
 Run the following command to create the tables in the database:
 
@@ -50,6 +61,8 @@ npm run db:migrate
 
 > [!NOTE]
 > If you make changes to `db/schema.ts`, make sure to run `npm run db:generate` to create the migrations, and `npm run db:migrate` to apply them.
+
+</details>
 
 4. **[Sign up to Clerk](https://clerk.com)**
 
