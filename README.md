@@ -41,7 +41,6 @@ Run the following:
 turso db create <database-name> --schema
 ```
 
-> [!NOTE]
 > If you didn't already have one, a new group will be created for you with the name `default`.
 
 </details>
@@ -63,7 +62,6 @@ TURSO_DATABASE_GROUP_AUTH_TOKEN=
 TURSO_ORG_NAME=
 ```
 
-> [!NOTE]
 > The `TURSO_ORG_NAME` can be your personal username, or the name of any organization you have with other users.
 
 </details>
@@ -77,7 +75,6 @@ Run the following:
 npm run db:migrate
 ```
 
-> [!NOTE]
 > If you make changes to `db/schema.ts`, make sure to run `npm run db:generate` to create the migrations, and `npm run db:migrate` to apply them.
 
 </details>
@@ -107,7 +104,6 @@ Now add the webhook secret to the `.env` file:
 CLERK_WEBHOOK_SECRET=
 ```
 
-> [!NOTE]
 > During development you might want to use [ngrok.io](https://ngrok.io) to expose your local server to the internet so Clerk can send webhooks to it.
 
 </details>
