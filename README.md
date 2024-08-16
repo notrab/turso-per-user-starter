@@ -164,9 +164,18 @@ When you're ready to deploy to production, click the button below:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnotrab%2Fturso-platforms-starter&env=NEXT_PUBLIC_CLERK_SIGN_IN_URL,NEXT_PUBLIC_CLERK_SIGN_UP_URL,NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,CLERK_WEBHOOK_SECRET,TURSO_USER_API_TOKEN,TURSO_ORG_NAME,TURSO_SCHEMA_DATABASE_NAME,TURSO_DATABASE_GROUP_AUTH_TOKEN)
 
-Then follow the steps for local development to configure the environment variables.
+<details>
+<summary>Configure environment variables</summary>
 
-Once your deployment has completed, go to Clerk > Webhooks (step 7) and set the webhook URL to your Vercel deployment URL + `/webhooks/clerk`.
+You can use the same development environment variables for production if you want to use a single database.
+
+**It's recommended to create a new database for production.**
+
+You will need to deploy the app to Vercel to obtain the Deployment URL. Once you have that, update the webhook URL in Clerk:
+
+![Update Clerk webhook endpoint](/public/update-webhook-url.png)
+
+</details>
 
 ## Tech Stack
 
