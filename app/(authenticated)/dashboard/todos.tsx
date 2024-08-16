@@ -14,6 +14,13 @@ export async function Todos() {
   if (!todos || todos.length === 0) return null;
 
   return todos.map((todo, index) => (
-    <Todo key={index} item={{ id: todo.id, description: todo.description }} />
+    <Todo
+      key={index}
+      item={{
+        id: todo.id,
+        description: todo.description,
+        completed: todo.completed,
+      }}
+    />
   ));
 }

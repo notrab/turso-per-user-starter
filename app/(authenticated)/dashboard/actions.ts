@@ -33,3 +33,28 @@ export const removeTodo = async (id: number) => {
 
   revalidatePath("/dashboard");
 };
+
+export const toggleTodo = async (id: number) => {
+  const client = await getDatabaseClient();
+
+  if (!client) return null;
+
+  console.log("got client");
+
+  const todo = await client.query.todos.findFirst({
+    where: eq(schema.todos.id, id),
+  });
+
+  console.log("got todo", todo);
+
+  if (!todo) return null;
+
+  const res = await client
+    .update(schema.todos)
+    .set({ completed: !todo.completed })
+    .where(eq(schema.todos.id, id));
+
+  console.log(res);
+
+  revalidatePath("/dashboard");
+};

@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { InferSelectModel } from "drizzle-orm";
 import * as schema from "@/db/schema";
-import { removeTodo } from "./actions";
+import { removeTodo, toggleTodo } from "./actions";
 
 type Todo = InferSelectModel<typeof schema.todos>;
 
@@ -15,9 +15,13 @@ export function Todo({ item }: { item: Todo }) {
       <div className="flex w-full items-center space-x-3 ">
         <button
           className="p-1 text-3xl"
-          onClick={() => alert("lol its a demo")}
+          onClick={() => {
+            startTransition(() => {
+              toggleTodo(item.id);
+            });
+          }}
         >
-          ☑️
+          {item.completed ? "✅" : "☑️"}
         </button>
         <span className="flex-1">{item.description}</span>
       </div>
