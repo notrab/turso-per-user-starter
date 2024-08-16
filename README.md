@@ -166,7 +166,7 @@ When you're ready to deploy to production, click the button below:
 
 Then follow the steps for local development to configure the environment variables.
 
-Once your deployment has completed, go to Clerk > Webhooks (step 6) and set the webhook URL to your Vercel deployment URL + `/webhooks/clerk`.
+Once your deployment has completed, go to Clerk > Webhooks (step 7) and set the webhook URL to your Vercel deployment URL + `/webhooks/clerk`.
 
 ## Tech Stack
 
