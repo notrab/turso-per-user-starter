@@ -39,22 +39,16 @@ export const toggleTodo = async (id: number) => {
 
   if (!client) return null;
 
-  console.log("got client");
-
   const todo = await client.query.todos.findFirst({
     where: eq(schema.todos.id, id),
   });
 
-  console.log("got todo", todo);
-
   if (!todo) return null;
 
-  const res = await client
+  await client
     .update(schema.todos)
     .set({ completed: !todo.completed })
     .where(eq(schema.todos.id, id));
-
-  console.log(res);
 
   revalidatePath("/dashboard");
 };
