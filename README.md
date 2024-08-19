@@ -35,7 +35,7 @@ npm install
 Follow the instructions to install the [Turso CLI](https://docs.turso.tech/cli/installation), and then run the following:
 
 ```bash
-turso db create <database-name> --schema
+turso db create <database-name> --type schema
 ```
 
 > Alternatively, you can [sign up](https://app.turso.tech) on the web, and create a new schema database from there.
@@ -48,7 +48,7 @@ turso db create <database-name> --schema
 Run the following:
 
 ```bash
-turso db create <database-name> --schema
+turso group tokens create <database-name>
 ```
 
 > If you didn't already have one, a new group will be created for you with the name `default`.
