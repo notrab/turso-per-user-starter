@@ -48,7 +48,7 @@ turso db create <database-name>
 Run the following:
 
 ```bash
-turso db tokens create <database-name> --group
+turso group tokens create <database-name>
 ```
 
 > If you didn't already have one, a new group will be created for you with the name `default`.
