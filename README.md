@@ -145,7 +145,7 @@ Start building your Turso powered platform in a few simple steps...
 
 You can automate the creation of databases per user in the background with webhooks.
 
-[Read the wiki](/wiki/Webhooks) for more information on how to set up webhooks with Clerk during development, and production.
+[Read the wiki](https://github.com/notrab/turso-platforms-starter/wiki) for more information on how to set up webhooks with Clerk during development, and production.
 
 ## Deploy to Production
 
@@ -154,6 +154,8 @@ Make sure you have a database setup (following the steps above), the database ha
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnotrab%2Fturso-platforms-starter&env=NEXT_PUBLIC_CLERK_SIGN_IN_URL,NEXT_PUBLIC_CLERK_SIGN_UP_URL,NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,CLERK_WEBHOOK_SECRET,TURSO_USER_API_TOKEN,TURSO_ORG_NAME,TURSO_SCHEMA_DATABASE_NAME,TURSO_DATABASE_GROUP_AUTH_TOKEN)
 
 If you're using webhooks, make sure to update Clerk with the production URL. You will need to know the Vercel production deployment ahead of time, or re-deploy once you have it.
+
+[Read the wiki](https://github.com/notrab/turso-platforms-starter/wiki)
 
 ## Tech Stack
 
