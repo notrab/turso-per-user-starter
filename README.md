@@ -6,7 +6,18 @@ A Next.js application that demonstrates how to use the [Turso](https://turso.tec
 
 ## Demo
 
+Login and manage todos stored in a dedicated database per user.
+
 [https://turso-platforms-starter.vercel.app](https://turso-platforms-starter.vercel.app/)
+
+## Tech Stack
+
+- [Turso](https://turso.tech) for multi-tenant databases
+- [Next.js](https://nextjs.org) for powerful full stack apps
+- [Tailwind CSS](https://tailwindcss.com) for utility-first CSS
+- [Drizzle](https://orm.drizzle.team) for database migrations and ORM
+- [Clerk](https://clerk.com) for authentication
+- [Vercel](https://vercel.com) for hosting
 
 ## Prerequisites
 
@@ -17,75 +28,114 @@ A Next.js application that demonstrates how to use the [Turso](https://turso.tec
 
 ## Local Development
 
-<details>
-<summary>1. Install dependencies and initialize new `.env` file</summary>
+1. <details>
+   <summary>Clone this repository</summary>
 
-Run the following:
+   Begin by cloning this repository to your machine:
 
-```bash
-cp .env.example .env
-npm install
-```
+   ```bash
+   git clone
+   ```
 
-</details>
+   </details>
 
-<details>
-<summary>2. Create a new SQLite multi-db schema database with Turso</summary>
+2. <details>
+   <summary>Install dependencies and initialize <pre>.env</pre></summary>
 
-Follow the instructions to install the [Turso CLI](https://docs.turso.tech/cli/installation), and then run the following:
+   Run the following:
 
-```bash
-turso db create <database-name> --type schema
-```
+   ```bash
+   cp .env.example .env
+   npm install
+   ```
 
-> Alternatively, you can [sign up](https://app.turso.tech) on the web, and create a new schema database from there.
+   </details>
 
-</details>
+3. <details>
+   <summary>Create a new SQLite schema database with Turso</summary>
 
-<details>
-<summary>3. Create a new group token</summary>
+   Follow the instructions to install the [Turso CLI](https://docs.turso.tech/cli/installation), and then run the following:
 
-Run the following:
+   ```bash
+   turso db create <database-name> --type schema
+   ```
 
-```bash
-turso group tokens create <database-name>
-```
+   > Alternatively, you can [sign up](https://app.turso.tech) on the web, and create a new schema database from there.
 
-> If you didn't already have one, a new group will be created for you with the name `default`.
+   Now update `.env` to include your organization, and schema database name:
 
-</details>
+   ```bash
+   TURSO_ORG_NAME=
+   TURSO_SCHEMA_DATABASE_NAME=
+   ```
 
-<details>
-<summary>4. Configure Turso</summary>
+   > The `TURSO_ORG_NAME` can be your personal username, or the name of any organization you have with other users.
 
-Add your database name, group token, and Turso organization name to the `.env` file:
+   </details>
 
-```bash
-TURSO_SCHEMA_DATABASE_NAME=
-TURSO_DATABASE_GROUP_AUTH_TOKEN=
-TURSO_ORG_NAME=
-```
+4. <details>
+   <summary>Create a new group token</summary>
 
-We'll finish configuring the `.env` file across the next few steps.
+   Run the following:
 
-> The `TURSO_ORG_NAME` can be your personal username, or the name of any organization you have with other users.
+   ```bash
+   turso group tokens create <database-name>
+   ```
 
-</details>
+   Now update `.env` to include the group token:
 
-<details>
-<summary>5. Run database migrations</summary>
+   ```bash
+   TURSO_DATABASE_GROUP_AUTH_TOKEN=
+   ```
 
-Run the following:
+   > If you didn't already have one, a new group will be created for you with the name `default`.
 
-```bash
-npm run db:migrate
-```
+   </details>
 
-> If you make changes to `db/schema.ts`, make sure to run `npm run db:generate` to create the migrations, and `npm run db:migrate` to apply them.
+5. <details>
+   <summary>Run database migrations</summary>
 
-</details>
+   Run the following:
 
-<details>
+   ```bash
+   npm run db:migrate
+   ```
+
+   > If you make changes to `db/schema.ts`, make sure to run `npm run db:generate` to create the migrations, and `npm run db:migrate` to apply them.
+
+   </details>
+
+6. <details>
+   <summary>Create a new Turso API Token</summary>
+
+   Run the following:
+
+   ```bash
+   turso auth api-tokens mint clerk
+   ```
+
+   Then set the API token in the `.env` file:
+
+   ```bash
+   TURSO_USER_API_TOKEN=
+   ```
+
+  </details>
+
+7. <details>
+   <summary>Configure Clerk</summary>
+
+   [Sign up to Clerk](https://clerk.com) and create a new application.
+
+   Add your Clerk public key and secret key to the `.env` file:
+
+   ```bash
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+   CLERK_SECRET_KEY=
+   ```
+
+   </details>
+
 <summary>6. Configure Clerk</summary>
 
 [Sign up to Clerk](https://clerk.com) and create a new application.
@@ -98,6 +148,10 @@ CLERK_SECRET_KEY=
 ```
 
 </details>
+
+---
+
+Ignore everything below this line for now.
 
 <details>
 <summary>7. Create a new Clerk webhook</summary>
@@ -129,21 +183,6 @@ CLERK_WEBHOOK_SECRET=
 </details>
 
 <details>
-<summary>8. Create a new Turso API Token</summary>
-
-Run the following:
-
-```bash
-turso auth api-tokens mint clerk
-```
-
-Set the API token in the `.env` file:
-
-```bash
-TURSO_USER_API_TOKEN=
-```
-
-</details>
 
 <details>
 <summary>9. Run the application locally</summary>
