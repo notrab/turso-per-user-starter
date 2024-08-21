@@ -6,25 +6,15 @@ A Next.js application that demonstrates how to use the [Turso](https://turso.tec
 
 ## Demo
 
-Login and manage todos stored in a dedicated database per user.
+The app below uses a database per user, and is powered by Turso.
 
 [https://turso-platforms-starter.vercel.app](https://turso-platforms-starter.vercel.app/)
-
-## Tech Stack
-
-- [Turso](https://turso.tech) for multi-tenant databases
-- [Next.js](https://nextjs.org) for powerful full stack apps
-- [Tailwind CSS](https://tailwindcss.com) for utility-first CSS
-- [Drizzle](https://orm.drizzle.team) for database migrations and ORM
-- [Clerk](https://clerk.com) for authentication
-- [Vercel](https://vercel.com) for hosting
 
 ## Prerequisites
 
 - [Vercel](https://vercel.com) account
 - [Clerk](https://clerk.com) account
 - [Turso](https://turso.tech) account & [CLI](https://docs.turso.tech/cli/installation)
-- [ngrok.io](https://ngrok.io) account (for local development) + CLI
 
 ## Get Started
 
@@ -167,12 +157,12 @@ If you're using webhooks, make sure to update Clerk with the production URL. You
 
 ## Tech Stack
 
-- [Turso](https://turso.tech)
-- [Drizzle](https://orm.drizzle.team)
-- [Next.js](https://nextjs.org)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Clerk](https://clerk.com)
-- [Vercel](https://vercel.com)
+- [Turso](https://turso.tech) for multi-tenant databases
+- [Next.js](https://nextjs.org) for powerful full stack apps
+- [Tailwind CSS](https://tailwindcss.com) for utility-first CSS
+- [Drizzle](https://orm.drizzle.team) for database migrations and ORM
+- [Clerk](https://clerk.com) for authentication
+- [Vercel](https://vercel.com) for hosting
 
 ## Need help?
 
