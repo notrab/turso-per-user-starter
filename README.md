@@ -18,7 +18,7 @@ The app below uses a database per user, and is powered by Turso.
 
 ## Get Started
 
-The best way to get started is to clone this repository, run it locally, and start building your Turso powered platform.
+Start building your Turso powered platform in a few simple steps...
 
 1. <details>
    <summary>Clone this repository</summary>
