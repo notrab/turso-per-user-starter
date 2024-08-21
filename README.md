@@ -141,15 +141,15 @@ The best way to get started is to clone this repository, run it locally, and sta
 8. <details>
    <summary>Run the application</summary>
 
-Run the following:
+   Run the following:
 
-```bash
-npm run dev
-```
+   ```bash
+   npm run dev
+   ```
 
-Now open [http://localhost:3000](http://localhost:3000) with your browser to try out the app!
+   Now open [http://localhost:3000](http://localhost:3000) with your browser to try out the app!
 
-</details>
+    </details>
 
 ## Optional: Webhook setup
 
