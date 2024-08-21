@@ -138,56 +138,8 @@ The best way to get started is to clone this repository, run it locally, and sta
 
    </details>
 
-<summary>6. Configure Clerk</summary>
-
-[Sign up to Clerk](https://clerk.com) and create a new application.
-
-Add your Clerk public key and secret key to the `.env` file:
-
-```bash
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-```
-
-</details>
-
----
-
-Ignore everything below this line for now.
-
-<details>
-<summary>7. Create a new Clerk webhook</summary>
-
-During development we will use [ngrok.io](https://ngrok.io) to expose our local server to the internet so Clerk can send webhooks to it.
-
-Run the following:
-
-```bash
-ngrok http 3000
-```
-
-> Make sure to change `3000` to the port your Next.js application is running on.
-
-Inside Clerk, go to Webhooks > Add Endpoint and enter the URL provided by ngrok + `/webhooks/clerk`, and select `user.created` as the event:
-
-![Clerk add endpoint](/public/add-webhook-endpoint.png)
-
-Next click on the webhook you just created and copy the signing secret:
-
-![Clerk signing secret](/public/copy-webhook-signing-secret.png)
-
-Add this signing secret to `.env`:
-
-```bash
-CLERK_WEBHOOK_SECRET=
-```
-
-</details>
-
-<details>
-
-<details>
-<summary>9. Run the application locally</summary>
+8. <details>
+   <summary>Run the application</summary>
 
 Run the following:
 
@@ -199,24 +151,19 @@ Now open [http://localhost:3000](http://localhost:3000) with your browser to try
 
 </details>
 
+## Optional: Webhook setup
+
+You can automate the creation of databases per user in the background with webhooks.
+
+[Read the wiki](/wiki/Webhooks) for more information on how to set up webhooks with Clerk during development, and production.
+
 ## Deploy to Production
 
-When you're ready to deploy to production, click the button below:
+Make sure you have a database setup (following the steps above), the database has been migrated, and you have the environment variables available.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnotrab%2Fturso-platforms-starter&env=NEXT_PUBLIC_CLERK_SIGN_IN_URL,NEXT_PUBLIC_CLERK_SIGN_UP_URL,NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,CLERK_WEBHOOK_SECRET,TURSO_USER_API_TOKEN,TURSO_ORG_NAME,TURSO_SCHEMA_DATABASE_NAME,TURSO_DATABASE_GROUP_AUTH_TOKEN)
 
-<details>
-<summary>Configure environment variables</summary>
-
-You can use the same development environment variables for production if you want to use a single database.
-
-**It's recommended to create a new database for production.**
-
-You will need to deploy the app to Vercel to obtain the Deployment URL. Once you have that, update the webhook URL in Clerk:
-
-![Update Clerk webhook endpoint](/public/update-webhook-url.png)
-
-</details>
+If you're using webhooks, make sure to update Clerk with the production URL. You will need to know the Vercel production deployment ahead of time, or re-deploy once you have it.
 
 ## Tech Stack
 
