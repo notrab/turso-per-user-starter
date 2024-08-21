@@ -26,7 +26,9 @@ Login and manage todos stored in a dedicated database per user.
 - [Turso](https://turso.tech) account & [CLI](https://docs.turso.tech/cli/installation)
 - [ngrok.io](https://ngrok.io) account (for local development) + CLI
 
-## Local Development
+## Get Started
+
+The best way to get started is to clone this repository, run it locally, and start building your Turso powered platform.
 
 1. <details>
    <summary>Clone this repository</summary>
@@ -40,7 +42,7 @@ Login and manage todos stored in a dedicated database per user.
    </details>
 
 2. <details>
-   <summary>Install dependencies and initialize <pre>.env</pre></summary>
+   <summary>Install dependencies and initialize <code>.env</code></summary>
 
    Run the following:
 
