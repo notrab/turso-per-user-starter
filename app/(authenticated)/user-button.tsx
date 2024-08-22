@@ -39,7 +39,7 @@ export function UserButton() {
           <ClerkUserButton.Link
             labelIcon={<GithubIcon />}
             label="Star repository"
-            href="https://github.com/notrab/turso-platforms-starter"
+            href="https://github.com/notrab/turso-per-user-starter"
           />
         </ClerkUserButton.MenuItems>
       </ClerkUserButton>

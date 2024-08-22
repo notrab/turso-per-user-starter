@@ -1,4 +1,4 @@
-# Turso Platforms Starter
+# Turso Per User Starter
 
 A Next.js application that demonstrates how to use the [Turso](https://turso.tech) Platforms API to create a database per user.
 
@@ -26,7 +26,8 @@ Start building your Turso powered platform in a few simple steps...
    Begin by cloning this repository to your machine:
 
    ```bash
-   git clone
+   git clone https://github.com/notrab/turso-per-user-starter.git
+   cd turso-per-user-starter
    ```
 
    </details>
