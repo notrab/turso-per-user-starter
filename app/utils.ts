@@ -12,7 +12,9 @@ const turso = createTursoClient({
   org: process.env.TURSO_ORG_NAME!,
 });
 
-export async function checkDatabaseExists(dbName: string): Promise<boolean> {
+export async function checkDatabaseExists(): Promise<boolean> {
+  const dbName = getDatabaseName();
+
   if (!dbName) return false;
 
   try {
