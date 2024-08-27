@@ -1,4 +1,5 @@
-import "./envConfig.ts";
+import "./envConfig";
+
 import { defineConfig } from "drizzle-kit";
 
 if (!process.env.TURSO_SCHEMA_DATABASE_NAME) {
