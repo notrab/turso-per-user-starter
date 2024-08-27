@@ -25,7 +25,7 @@ Deploy your own Turso powered platform in a few easy steps...
   - Add the environment variables from above
   - Deploy your app
 
-You may optionally set up webhooks to automate the creation of databases per user in the background &mdash; [learn more](https://github.com/notrab/turso-platforms-starter/wiki/Webhooks#using-webhooks-in-production).
+You may optionally set up webhooks to automate the creation of databases per user in the background &mdash; [learn more](https://github.com/notrab/turso-per-user-starter/wiki/Webhooks#using-webhooks-in-production).
 
 ## Local Development
 
@@ -157,7 +157,7 @@ Start building your Turso powered platform in a few simple steps...
 
 You can automate the creation of databases per user in the background with webhooks.
 
-[Read the wiki](https://github.com/notrab/turso-platforms-starter/wiki/Webhooks#using-webhooks-locally) for more information on how to set up webhooks with Clerk during development, and production.
+[Read the wiki](https://github.com/notrab/turso-per-user-starter/wiki/Webhooks#using-webhooks-locally) for more information on how to set up webhooks with Clerk during development, and production.
 
 ## Tech Stack
 
