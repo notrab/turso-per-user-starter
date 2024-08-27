@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./envConfig.ts";
 import { defineConfig } from "drizzle-kit";
 
 if (!process.env.TURSO_SCHEMA_DATABASE_NAME) {
