@@ -22,7 +22,7 @@ export default function Page() {
         ></path>
       </svg>
       <h1 className="text-5xl font-black text-center tracking-tight text-white">
-        Turso Platforms Starter
+        Turso Per User Starter
       </h1>
       <p className="text-lg text-white/60">
         Database per user demo &mdash;{" "}

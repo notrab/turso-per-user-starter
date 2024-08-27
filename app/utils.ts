@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, type User } from "@clerk/nextjs/server";
 import { createClient as createLibsqlClient } from "@libsql/client";
 import { createClient as createTursoClient } from "@tursodatabase/api";
 import md5 from "md5";
@@ -12,32 +12,16 @@ const turso = createTursoClient({
   org: process.env.TURSO_ORG_NAME!,
 });
 
-export async function checkDatabaseExists() {
-  const dbName = getDatabaseName();
+export async function checkDatabaseExists(dbName: string): Promise<boolean> {
   if (!dbName) return false;
 
   try {
     await turso.databases.get(dbName);
     return true;
-  } catch {
+  } catch (error) {
+    console.error("Error checking database existence:", error);
     return false;
   }
-
-  // const url = getHealthcheckEndpoint();
-
-  // if (!url) {
-  //   console.error("Failed to check database existence: URL is null.");
-  //   return null;
-  // }
-
-  // try {
-  //   const response = await fetch(url);
-
-  //   return response.status === 200;
-  // } catch (error) {
-  //   console.error("Failed to check database existence:", error);
-  //   return false;
-  // }
 }
 
 export async function getDatabaseClient() {
@@ -62,30 +46,23 @@ export async function getDatabaseClient() {
   }
 }
 
-export function getDatabaseName() {
+export function getDatabaseName(): string | null {
   const userId = auth().userId;
-
-  if (!userId) return null;
-
-  return md5(userId);
+  return userId ? md5(userId) : null;
 }
 
-function getDatabaseUrl() {
-  const dbName = getDatabaseName();
+function getDatabaseUrl(dbName: string | null): string | null {
   return dbName ? `${dbName}-${process.env.TURSO_ORG_NAME}.turso.io` : null;
 }
 
-// function getHealthcheckEndpoint() {
-//   const url = getDatabaseUrl();
-//   return url ? `https://${url}/health` : null;
-// }
-
-function getLibsqlUrl() {
-  const url = getDatabaseUrl();
+function getLibsqlUrl(): string | null {
+  const dbName = getDatabaseName();
+  const url = getDatabaseUrl(dbName);
   return url ? `libsql://${url}` : null;
 }
 
-export function getDumpUrl() {
-  const url = getDatabaseUrl();
+export function getDumpUrl(): string | null {
+  const dbName = getDatabaseName();
+  const url = getDatabaseUrl(dbName);
   return url ? `https://${url}/dump` : null;
 }
