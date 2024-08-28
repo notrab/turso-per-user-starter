@@ -8,8 +8,8 @@ import { drizzle } from "drizzle-orm/libsql";
 import * as schema from "@/db/schema";
 
 const turso = createTursoClient({
-  token: process.env.TURSO_USER_API_TOKEN!,
-  org: process.env.TURSO_ORG_NAME!,
+  token: process.env.TURSO_API_TOKEN!,
+  org: process.env.TURSO_ORG!,
 });
 
 export async function checkDatabaseExists(): Promise<boolean> {
@@ -38,7 +38,7 @@ export async function getDatabaseClient() {
     return drizzle(
       createLibsqlClient({
         url,
-        authToken: process.env.TURSO_DATABASE_GROUP_AUTH_TOKEN,
+        authToken: process.env.TURSO_GROUP_AUTH_TOKEN,
       }),
       { schema },
     );
@@ -54,7 +54,7 @@ export function getDatabaseName(): string | null {
 }
 
 function getDatabaseUrl(dbName: string | null): string | null {
-  return dbName ? `${dbName}-${process.env.TURSO_ORG_NAME}.turso.io` : null;
+  return dbName ? `${dbName}-${process.env.TURSO_ORG}.turso.io` : null;
 }
 
 function getLibsqlUrl(): string | null {

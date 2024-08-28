@@ -5,8 +5,8 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import md5 from "md5";
 
 const turso = createClient({
-  token: process.env.TURSO_USER_API_TOKEN!,
-  org: process.env.TURSO_ORG_NAME!,
+  token: process.env.TURSO_API_TOKEN!,
+  org: process.env.TURSO_ORG!,
 });
 
 const allowedEvents = ["user.created"];
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
 
   try {
     await turso.databases.create(databaseName, {
-      schema: process.env.TURSO_SCHEMA_DATABASE_NAME!,
+      schema: process.env.TURSO_DATABASE_NAME!,
     });
   } catch (err) {
     console.error("Error processing webhook:", err);

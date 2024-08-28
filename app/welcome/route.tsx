@@ -5,8 +5,8 @@ import { createClient } from "@tursodatabase/api";
 import { checkDatabaseExists, getDatabaseName } from "../utils";
 
 const turso = createClient({
-  token: process.env.TURSO_USER_API_TOKEN!,
-  org: process.env.TURSO_ORG_NAME!,
+  token: process.env.TURSO_API_TOKEN!,
+  org: process.env.TURSO_ORG!,
 });
 
 export async function GET() {
@@ -26,7 +26,7 @@ export async function GET() {
 
   try {
     await turso.databases.create(dbName, {
-      schema: process.env.TURSO_SCHEMA_DATABASE_NAME!,
+      schema: process.env.TURSO_DATABASE_NAME!,
       group: "default",
     });
   } catch (err) {

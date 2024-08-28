@@ -12,7 +12,7 @@ export async function GET() {
   try {
     const response = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${process.env.TURSO_DATABASE_GROUP_AUTH_TOKEN}`,
+        Authorization: `Bearer ${process.env.TURSO_GROUP_AUTH_TOKEN}`,
       },
     });
 
