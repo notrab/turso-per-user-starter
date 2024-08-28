@@ -16,6 +16,7 @@ Deploy your own Turso powered platform in a few easy steps...
 
 - [![Create a Database](https://sqlite.new/button)](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-per-user-starter%2Fmain%2Fdump.sql&type=schema)
 
+  - Once the database is created, you'll be presented with details about your database, and **Connect** details
   - Note down the following (you'll need these later):
     - Database name
     - Org name
