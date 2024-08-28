@@ -29,7 +29,7 @@ Deploy your own Turso powered platform in a few easy steps...
     - Public key
     - Secret key
 - [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnotrab%2Fturso-per-user-starter&env=NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,TURSO_API_TOKEN,TURSO_ORG,TURSO_DATABASE_NAME,TURSO_GROUP_AUTH_TOKEN&demo-title=Turso%20Per%20User%20Starter&demo-description=Create%20a%20database%20per%20user&demo-image=https://raw.githubusercontent.com/notrab/turso-per-user-starter/28373b4c9c74f814e3749525ee3d53b603176834/app/opengraph-image.png&demo-url=https%3A%2F%2Fturso-per-user-starter.vercel.app)
-  - Add the following environment variables:
+  - Add the following environment variables (from the details you noted down earlier):
     - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` - Clerk public key
     - `CLERK_SECRET_KEY` - Clerk secret key
     - `TURSO_API_TOKEN` - Platform API Token
