@@ -38,7 +38,7 @@ Deploy your own Turso powered platform in a few easy steps...
     - `TURSO_GROUP_AUTH_TOKEN` - Group Token
   - Click **Deploy** and you're done!
 
-_You may optionally set up webhooks to automate the creation of databases per user in the background &mdash; [learn more](https://github.com/notrab/turso-per-user-starter/wiki/Webhooks#using-webhooks-in-production)._
+_You may optionally set up webhooks to automate the creation of databases in the background &mdash; [learn more](https://github.com/notrab/turso-per-user-starter/wiki/Webhooks#using-webhooks-in-production)._
 
 ## Local Development
 
