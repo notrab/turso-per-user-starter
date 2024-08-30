@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import * as schema from "@/db/schema";
 import { getDatabaseClient } from "@/app/utils";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export type TodoItem = {
   id: number;
@@ -39,15 +39,9 @@ export const toggleTodo = async (id: number) => {
 
   if (!client) return null;
 
-  const todo = await client.query.todos.findFirst({
-    where: eq(schema.todos.id, id),
-  });
-
-  if (!todo) return null;
-
   await client
     .update(schema.todos)
-    .set({ completed: !todo.completed })
+    .set({ completed: sql`NOT completed` })
     .where(eq(schema.todos.id, id));
 
   revalidatePath("/dashboard");
