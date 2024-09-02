@@ -2,12 +2,21 @@
 
 import { useTransition } from "react";
 import { InferSelectModel } from "drizzle-orm";
+
 import * as schema from "@/db/schema";
 import { removeTodo, toggleTodo } from "./actions";
 
 type Todo = InferSelectModel<typeof schema.todos>;
 
-export function Todo({ item }: { item: Todo }) {
+export function Todo({
+  item,
+  onRemove,
+  onToggle,
+}: {
+  item: Todo;
+  onRemove: (id: number) => void;
+  onToggle: (id: number) => void;
+}) {
   const [_, startTransition] = useTransition();
 
   return (
@@ -17,7 +26,7 @@ export function Todo({ item }: { item: Todo }) {
           className="p-1 text-3xl"
           onClick={() => {
             startTransition(() => {
-              toggleTodo(item.id);
+              onToggle(item.id);
             });
           }}
         >
@@ -29,7 +38,7 @@ export function Todo({ item }: { item: Todo }) {
         className="p-1 flex items-center justify-between transition hover:bg-white/10 rounded"
         onClick={() => {
           startTransition(() => {
-            removeTodo(item.id);
+            onRemove(item.id);
           });
         }}
       >

@@ -5,17 +5,17 @@ import { useFormStatus } from "react-dom";
 
 import { addTodo } from "./actions";
 
-export function Form() {
+export function Form({ onSubmit }: { onSubmit: (formData: FormData) => void }) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  formRef.current?.reset();
+  const handleSubmit = async (formData: FormData) => {
+    await onSubmit(formData);
+    formRef.current?.reset();
+  };
 
   return (
     <form
-      action={async (formData) => {
-        await addTodo(formData);
-        formRef.current?.reset();
-      }}
+      action={handleSubmit}
       className="flex items-center justify-between rounded bg-brunswick-green p-6 shadow-sm"
       ref={formRef}
     >

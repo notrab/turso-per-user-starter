@@ -1,5 +1,4 @@
 import { Todos } from "./todos";
-import { Form } from "./form";
 
 export default async function Page() {
   return (
@@ -11,7 +10,6 @@ export default async function Page() {
         </p>
       </div>
       <Todos />
-      <Form />
     </div>
   );
 }
