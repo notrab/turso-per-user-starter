@@ -183,4 +183,7 @@ You can automate the creation of databases per user in the background with webho
 
 ## Need help?
 
+> [!WARNING]
+> Turso Multi-DB Schemas are currently in beta.
+
 [Join us on Discord](https://tur.so/discord)
