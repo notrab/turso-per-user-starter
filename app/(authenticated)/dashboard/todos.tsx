@@ -10,5 +10,5 @@ export async function Todos() {
 
   const todos = await client.query.todos.findMany();
 
-  return <TodoList initialTodos={todos} />;
+  return <TodoList initialTodos={todos || []} />;
 }
