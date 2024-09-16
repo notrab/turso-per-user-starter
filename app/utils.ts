@@ -60,6 +60,7 @@ function getDatabaseUrl(dbName: string | null): string | null {
 function getLibsqlUrl(): string | null {
   const dbName = getDatabaseName();
   const url = getDatabaseUrl(dbName);
+  console.log({ url });
   return url ? `libsql://${url}` : null;
 }
 
