@@ -28,3 +28,5 @@ export async function GET() {
     return new Response("Could not download dump", { status: 500 });
   }
 }
+
+export const revalidate = 0;
