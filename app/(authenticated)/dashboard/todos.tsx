@@ -10,7 +10,5 @@ export async function Todos() {
 
   const todos = await client.query.todos.findMany();
 
-  if (!todos || todos.length === 0) return null;
-
   return <TodoList initialTodos={todos} />;
 }
