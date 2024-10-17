@@ -38,7 +38,6 @@ export async function getDatabaseClient() {
     const client = createLibsqlClient({
       url,
       authToken: process.env.TURSO_GROUP_AUTH_TOKEN,
-      fetch: fetch,
     });
 
     return drizzle(client, { schema });
