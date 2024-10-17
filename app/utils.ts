@@ -1,5 +1,4 @@
 import { auth, type User } from "@clerk/nextjs/server";
-import { createClient as createLibsqlClient } from "@libsql/client";
 import { createClient as createTursoClient } from "@tursodatabase/api";
 import md5 from "md5";
 import { redirect } from "next/navigation";
@@ -35,13 +34,13 @@ export async function getDatabaseClient() {
   }
 
   try {
-    return drizzle(
-      createLibsqlClient({
+    return drizzle({
+      connection: {
         url,
         authToken: process.env.TURSO_GROUP_AUTH_TOKEN,
-      }),
-      { schema },
-    );
+      },
+      schema,
+    });
   } catch (error) {
     console.error("Failed to create database client:", error);
     return null;
