@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.3.3",
-    "@libsql/client": "^0.14.0",
+    "@libsql/client": "^0.10.0",
     "@next/env": "^14.2.11",
     "@tursodatabase/api": "^1.8.1",
     "drizzle-orm": "^0.34.1",
