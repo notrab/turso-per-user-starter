@@ -19,8 +19,7 @@ const url = `libsql://${process.env.TURSO_DATABASE_NAME}-${process.env.TURSO_ORG
 export default defineConfig({
   schema: "./db/schema.ts",
   out: "./migrations",
-  dialect: "sqlite",
-  driver: "turso",
+  dialect: "turso",
   dbCredentials: {
     url,
     authToken: process.env.TURSO_GROUP_AUTH_TOKEN,
