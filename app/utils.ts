@@ -1,4 +1,4 @@
-import { auth, type User } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { createClient as createTursoClient } from "@tursodatabase/api";
 import md5 from "md5";
 import { redirect } from "next/navigation";
