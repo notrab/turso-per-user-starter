@@ -3,7 +3,8 @@ BEGIN TRANSACTION;
 
 CREATE TABLE todos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    description TEXT
+    description TEXT,
+    completed integer DEFAULT false NOT NULL
 );
 
 COMMIT;
