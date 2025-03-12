@@ -1,16 +1,10 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { createClient } from "@tursodatabase/api";
 
-import { checkDatabaseExists, getDatabaseName } from "../utils";
-
-const turso = createClient({
-  token: process.env.TURSO_API_TOKEN!,
-  org: process.env.TURSO_ORG!,
-});
+import { checkDatabaseExists, createUserDatabase } from "../utils";
 
 export async function GET() {
-  auth().protect();
+  const { userId } = auth().protect();
 
   const databaseExists = await checkDatabaseExists();
 
@@ -18,20 +12,21 @@ export async function GET() {
     return redirect("/dashboard");
   }
 
-  const dbName = getDatabaseName();
-
-  if (!dbName) {
+  if (!userId) {
     return redirect("/sign-in");
   }
 
   try {
-    await turso.databases.create(dbName, {
-      schema: process.env.TURSO_DATABASE_NAME!,
-      group: "default",
-    });
+    const success = await createUserDatabase(userId);
+
+    if (!success) {
+      return new Response("Error creating database", {
+        status: 500,
+      });
+    }
   } catch (err) {
-    console.error("Error processing webhook:", err);
-    return new Response("Error occured", {
+    console.error("Error creating database:", err);
+    return new Response("Error occurred", {
       status: 500,
     });
   }

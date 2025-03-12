@@ -1,13 +1,8 @@
-import { createClient } from "@tursodatabase/api";
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import md5 from "md5";
 
-const turso = createClient({
-  token: process.env.TURSO_API_TOKEN!,
-  org: process.env.TURSO_ORG!,
-});
+import { createUserDatabase } from "@/app/utils";
 
 const allowedEvents = ["user.created"];
 
@@ -66,15 +61,17 @@ export async function POST(req: Request) {
     });
   }
 
-  const databaseName = md5(id);
-
   try {
-    await turso.databases.create(databaseName, {
-      schema: process.env.TURSO_DATABASE_NAME!,
-    });
+    const success = await createUserDatabase(id);
+
+    if (!success) {
+      return new Response("Error creating database", {
+        status: 500,
+      });
+    }
   } catch (err) {
     console.error("Error processing webhook:", err);
-    return new Response("Error occured", {
+    return new Response("Error occurred", {
       status: 500,
     });
   }
