@@ -14,7 +14,7 @@ The app below uses a database per user, and is powered by Turso.
 
 Deploy your own Turso powered platform in a few easy steps...
 
-- [![Create a Database](https://sqlite.new/button)](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-per-user-starter%2Fmain%2Fdump.sql&type=schema)
+- [![Create a Database](https://sqlite.new/button)](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-per-user-starter%2Fmain%2Fdump.sql)
 
   - Once the database is created, you'll be presented with details about your database, and **Connect** details
   - Note down the following (you'll need these later):
@@ -69,17 +69,17 @@ Start building your Turso powered platform in a few simple steps...
    </details>
 
 3. <details>
-   <summary>Create a new SQLite schema database with Turso</summary>
+   <summary>Create a new Turso database with Turso</summary>
 
    Follow the instructions to install the [Turso CLI](https://docs.turso.tech/cli/installation), and then run the following:
 
    ```bash
-   turso db create <database-name> --type schema
+   turso db create <database-name>
    ```
 
-   > Alternatively, you can [sign up](https://app.turso.tech) on the web, and create a new schema database from there.
+   > Alternatively, you can [sign up](https://app.turso.tech) on the web, and create a new database from there.
 
-   Now update `.env` to include your organization, and schema database name:
+   Now update `.env` to include your organization, and database name:
 
    ```bash
    TURSO_ORG=
@@ -183,7 +183,6 @@ You can automate the creation of databases per user in the background with webho
 
 ## Need help?
 
-> [!WARNING]
-> Turso Multi-DB Schemas are currently in beta.
-
-[Join us on Discord](https://tur.so/discord)
+1. Open an issue on GitHub
+2. Submit a Pull Request to improve this repo
+3. [Join us on Discord](https://tur.so/discord)

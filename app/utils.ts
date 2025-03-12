@@ -1,4 +1,4 @@
-import { auth, type User } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { createClient as createLibsqlClient } from "@libsql/client";
 import { createClient as createTursoClient } from "@tursodatabase/api";
 import md5 from "md5";
@@ -67,4 +67,25 @@ export function getDumpUrl(): string | null {
   const dbName = getDatabaseName();
   const url = getDatabaseUrl(dbName);
   return url ? `https://${url}/dump` : null;
+}
+
+export async function createUserDatabase(userId: string): Promise<boolean> {
+  if (!userId) return false;
+
+  const dbName = md5(userId);
+
+  try {
+    await turso.databases.create(dbName, {
+      group: "default",
+      seed: {
+        type: "database",
+        name: process.env.TURSO_DATABASE_NAME!,
+      },
+    });
+
+    return true;
+  } catch (err) {
+    console.error("Error creating user database:", err);
+    return false;
+  }
 }
