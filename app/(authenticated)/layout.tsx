@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { checkDatabaseExists } from "../utils";
+import { checkDatabaseExists } from "@/lib/tenancy";
 import { Header } from "./header";
 
 export default async function Layout({

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
+import { AuthProvider } from "@/lib/auth/components";
 
 import "./globals.css";
 
@@ -17,12 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <AuthProvider>
       <html lang="en">
         <body className={`bg-rich-black overscroll-none ${inter.className}`}>
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }

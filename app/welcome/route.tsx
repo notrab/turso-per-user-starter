@@ -1,19 +1,15 @@
-import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-import { checkDatabaseExists, createUserDatabase } from "../utils";
+import { requireUserId } from "@/lib/auth";
+import { checkDatabaseExists, createUserDatabase } from "@/lib/tenancy";
 
 export async function GET() {
-  const { userId } = auth().protect();
+  const userId = await requireUserId();
 
   const databaseExists = await checkDatabaseExists();
 
   if (databaseExists) {
     return redirect("/dashboard");
-  }
-
-  if (!userId) {
-    return redirect("/sign-in");
   }
 
   try {

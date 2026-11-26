@@ -1,5 +1,5 @@
-import { SignUp } from "@clerk/nextjs";
+import { SignUpForm } from "@/lib/auth/components";
 
 export default function Page() {
-  return <SignUp path="/sign-up" fallbackRedirectUrl="/welcome" />;
+  return <SignUpForm redirectTo="/welcome" />;
 }

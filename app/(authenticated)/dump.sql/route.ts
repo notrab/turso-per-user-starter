@@ -1,28 +1,19 @@
-import { auth } from "@clerk/nextjs/server";
-
-import { getDumpUrl } from "@/app/utils";
+import { requireUserId } from "@/lib/auth";
+import { canDumpDatabases, dumpUserDatabase } from "@/lib/tenancy";
 
 export async function GET() {
-  auth().protect();
+  await requireUserId();
 
-  const url = getDumpUrl();
-
-  if (!url) return new Response("No data yet");
+  if (!canDumpDatabases()) {
+    return new Response("Export isn't supported by this database provider", {
+      status: 501,
+    });
+  }
 
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${process.env.TURSO_GROUP_AUTH_TOKEN}`,
-      },
-    });
+    const dump = await dumpUserDatabase();
 
-    if (response.ok) {
-      const text = await response.text();
-
-      return new Response(text);
-    }
-
-    return new Response("No data yet");
+    return new Response(dump ?? "No data yet");
   } catch (err) {
     console.log("Could not download dump");
     return new Response("Could not download dump", { status: 500 });
