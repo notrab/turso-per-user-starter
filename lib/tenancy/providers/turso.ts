@@ -18,6 +18,11 @@ function isNotFound(error: unknown): boolean {
   );
 }
 
+/** Whether Turso credentials are set, whichever provider new users get. */
+export function isTursoConfigured(): boolean {
+  return Boolean(process.env.TURSO_API_TOKEN && process.env.TURSO_ORG);
+}
+
 export function createTursoProvider(): DatabaseProvider {
   const turso = createClient({
     token: requireEnv("TURSO_API_TOKEN"),

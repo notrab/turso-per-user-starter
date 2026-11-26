@@ -71,7 +71,7 @@ export async function markTenantReady(
   userId: string,
   values: Pick<
     Tenant,
-    "dbName" | "dbId" | "dbUrl" | "authTokenEnc" | "schemaVersion"
+    "provider" | "dbName" | "dbId" | "dbUrl" | "authTokenEnc" | "schemaVersion"
   >,
 ): Promise<Tenant> {
   const [row] = await controlDb()

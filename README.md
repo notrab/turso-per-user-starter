@@ -219,14 +219,14 @@ Each user's database can be created on [Bunny Database](https://bunny.net/databa
    TENANT_TOKEN_ENCRYPTION_KEY= # openssl rand -base64 32
    ```
 
-   The `TURSO_*` variables aren't needed.
+   The `TURSO_*` variables aren't needed for a new deployment.
 
 Things to know:
 
 - Bunny issues a token per database. Tokens are stored encrypted in the control database with `TENANT_TOKEN_ENCRYPTION_KEY`, so keep that key safe and don't change it, or stored tokens can't be read.
 - During the Public Preview an account can have 50 databases, of up to 1 GB each. One database per user means you'll reach that quickly, so ask [bunny.net support](https://support.bunny.net) to raise it before launching. Signups past the limit fail with a message saying so.
 - Bunny has no export endpoint, so **Download my data** builds the SQL dump over a normal database connection.
-- Users who already have a database stay on the provider they were created with. Changing `DB_PROVIDER` only affects new users.
+- Users who already have a database stay on the provider they were created with. Changing `DB_PROVIDER` only affects new users. If you're moving an existing Turso deployment, keep the `TURSO_*` variables set so existing users' databases are still found and used.
 
 ## Optional: Webhook setup
 
