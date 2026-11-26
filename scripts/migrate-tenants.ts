@@ -7,7 +7,11 @@
 // needs the new schema. Tenants that fail are reported and left as they were.
 import "../envConfig";
 
-import { latestSchemaVersion, migrateTenantDatabase } from "@/lib/tenancy/migrate";
+import {
+  baselineLegacyDatabase,
+  latestSchemaVersion,
+  migrateTenantDatabase,
+} from "@/lib/tenancy/migrate";
 import { getDatabaseProvider } from "@/lib/tenancy/providers";
 import {
   listReadyTenants,
@@ -18,10 +22,21 @@ import {
 
 const CONCURRENCY = 5;
 const dryRun = process.argv.includes("--dry-run");
+let baselined = 0;
 
 async function migrateOne(tenant: Tenant) {
   const provider = getDatabaseProvider(tenant.provider);
   const credentials = await provider.credentials(tenantDatabase(tenant));
+
+  // Databases from before the registry have an unknown schema version and
+  // usually no migration history. Record what they already contain first.
+  if (
+    tenant.schemaVersion === null &&
+    (await baselineLegacyDatabase(credentials))
+  ) {
+    baselined++;
+  }
+
   const version = await migrateTenantDatabase(credentials, { attempts: 2 });
   await setTenantSchemaVersion(tenant.userId, version);
 }
@@ -60,12 +75,17 @@ async function main() {
 
     if (tenant.schemaVersion === null) {
       console.error(
-        "  This database was created before the registry and may have no migration history.",
+        "  This database was created before the registry. Check its schema matches the first migration.",
       );
     }
   }
 
-  console.log(`Migrated ${tenants.length - failures.length}, failed ${failures.length}`);
+  console.log(
+    `Migrated ${tenants.length - failures.length}, failed ${failures.length}` +
+      (baselined
+        ? ` (${baselined} pre-registry database(s) baselined first)`
+        : ""),
+  );
   if (failures.length > 0) process.exitCode = 1;
 }
 
