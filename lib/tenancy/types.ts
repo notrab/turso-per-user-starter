@@ -20,7 +20,10 @@ export type DatabaseCredentials = {
 export interface DatabaseProvider {
   readonly name: string;
 
-  /** Creates a database and returns where it lives. */
+  /**
+   * Creates a database and returns where it lives. Call find() first:
+   * providers may not enforce unique names (Bunny doesn't).
+   */
   create(name: string): Promise<TenantDatabase>;
 
   /**

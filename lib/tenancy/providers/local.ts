@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
 
+import { dumpDatabase } from "../dump";
 import type { DatabaseProvider, TenantDatabase } from "../types";
 
 // Local SQLite files, for development without a cloud account.
@@ -29,6 +30,10 @@ export function createLocalProvider(): DatabaseProvider {
 
     async credentials(db) {
       return { url: db.url };
+    },
+
+    async dump(db) {
+      return dumpDatabase({ url: db.url });
     },
   };
 }

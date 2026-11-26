@@ -175,6 +175,37 @@ Start building your Turso powered platform in a few simple steps...
 
     </details>
 
+## Using Bunny Database
+
+Each user's database can be created on [Bunny Database](https://bunny.net/database) instead of Turso. Both run libSQL, so the app code is the same.
+
+1. Create the control database and a token for it with the [bunny CLI](https://bunny.net/docs/cli):
+
+   ```bash
+   bunny db create --name control --primary DE --token
+   ```
+
+   Set `CONTROL_DATABASE_URL` and `CONTROL_DATABASE_AUTH_TOKEN` from the output, then run `npm run db:control:migrate`.
+
+2. Set the following in `.env`:
+
+   ```bash
+   DB_PROVIDER=bunny
+   BUNNYNET_API_KEY=
+   BUNNY_DB_STORAGE_REGION=eu-west-1
+   BUNNY_DB_PRIMARY_REGIONS=DE
+   TENANT_TOKEN_ENCRYPTION_KEY= # openssl rand -base64 32
+   ```
+
+   The `TURSO_*` variables aren't needed.
+
+Things to know:
+
+- Bunny issues a token per database. Tokens are stored encrypted in the control database with `TENANT_TOKEN_ENCRYPTION_KEY`, so keep that key safe and don't change it, or stored tokens can't be read.
+- During the Public Preview an account can have 50 databases, of up to 1 GB each. One database per user means you'll reach that quickly, so ask [bunny.net support](https://support.bunny.net) to raise it before launching. Signups past the limit fail with a message saying so.
+- Bunny has no export endpoint, so **Download my data** builds the SQL dump over a normal database connection.
+- Users who already have a database stay on the provider they were created with. Changing `DB_PROVIDER` only affects new users.
+
 ## Optional: Webhook setup
 
 You can automate the creation of databases per user in the background with webhooks.

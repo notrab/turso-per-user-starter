@@ -1,9 +1,11 @@
 import type { DatabaseProvider } from "../types";
+import { createBunnyProvider } from "./bunny";
 import { createLocalProvider } from "./local";
 import { createTursoProvider } from "./turso";
 
 const factories: Record<string, () => DatabaseProvider> = {
   turso: createTursoProvider,
+  bunny: createBunnyProvider,
   local: createLocalProvider,
 };
 
