@@ -1,8 +1,8 @@
-# Turso Per User Starter
+# SQLite Per User Starter
 
-A Next.js application that demonstrates how to use the [Turso](https://turso.tech) Platforms API to create a database per user.
+A Next.js application that gives every user their own SQLite database. Databases can be created on [Turso](https://turso.tech) or [Bunny Database](https://bunny.net/database), and sign-in can use [Clerk](https://clerk.com) or [Better Auth](https://www.better-auth.com).
 
-![Turso Per User Starter Template](/app/opengraph-image.png)
+![SQLite Per User Starter Template](/app/opengraph-image.png)
 
 ## Demo
 
