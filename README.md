@@ -175,6 +175,28 @@ Start building your Turso powered platform in a few simple steps...
 
     </details>
 
+## Using Better Auth
+
+Instead of Clerk, you can run your own auth with [Better Auth](https://www.better-auth.com). Users and sessions are stored in the control database, next to the record of each user's database, so there's no extra service to sign up for.
+
+1. Set the following in `.env`:
+
+   ```bash
+   AUTH_PROVIDER=better-auth
+   BETTER_AUTH_SECRET= # openssl rand -base64 32
+   BETTER_AUTH_URL=http://localhost:3000
+   ```
+
+   The Clerk variables aren't needed.
+
+2. Run `npm run db:control:migrate` if you haven't already. It creates the Better Auth tables.
+
+Users sign up with an email and password. To add **Continue with GitHub**, create a [GitHub OAuth app](https://github.com/settings/developers) with the callback URL `<BETTER_AUTH_URL>/api/auth/callback/github`, then set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
+
+Each user's database is created when they sign up. If that fails, it's retried on their next visit.
+
+The Better Auth setup lives in `lib/auth/providers/better-auth/`. Add plugins (email verification, passkeys, organizations and so on) in `auth.ts`. If a plugin needs extra columns, add them to `db/control/auth-schema.ts` and run `npm run db:control:generate`.
+
 ## Using Bunny Database
 
 Each user's database can be created on [Bunny Database](https://bunny.net/database) instead of Turso. Both run libSQL, so the app code is the same.

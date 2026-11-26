@@ -8,7 +8,7 @@ if (!process.env.CONTROL_DATABASE_URL) {
 
 // The control database records which database belongs to which user.
 export default defineConfig({
-  schema: "./db/control/schema.ts",
+  schema: ["./db/control/schema.ts", "./db/control/auth-schema.ts"],
   out: "./db/control/migrations",
   dialect: "turso",
   dbCredentials: {

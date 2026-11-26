@@ -6,6 +6,7 @@ const nextConfig = {
     outputFileTracingIncludes: {
       "/welcome": ["./db/tenant/migrations/**/*"],
       "/webhooks/clerk": ["./db/tenant/migrations/**/*"],
+      "/api/auth/[...all]": ["./db/tenant/migrations/**/*"],
     },
   },
 };

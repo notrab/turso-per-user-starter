@@ -1,8 +1,6 @@
-import { createClient } from "@libsql/client";
 import { and, eq, lt, or } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/libsql";
 
-import * as schema from "@/db/control/schema";
+import { controlDb } from "@/db/control/client";
 import { tenants, type Tenant } from "@/db/control/schema";
 
 import { decryptToken } from "./crypto";
@@ -14,21 +12,6 @@ export type { Tenant };
 const STALE_CLAIM_SECONDS = 120;
 
 const now = () => Math.floor(Date.now() / 1000);
-
-let client: ReturnType<typeof drizzle<typeof schema>> | undefined;
-
-function controlDb() {
-  if (client) return client;
-
-  const url = process.env.CONTROL_DATABASE_URL;
-  if (!url) throw new Error("CONTROL_DATABASE_URL is missing");
-
-  client = drizzle(
-    createClient({ url, authToken: process.env.CONTROL_DATABASE_AUTH_TOKEN }),
-    { schema },
-  );
-  return client;
-}
 
 export async function getTenant(userId: string): Promise<Tenant | null> {
   const row = await controlDb().query.tenants.findFirst({

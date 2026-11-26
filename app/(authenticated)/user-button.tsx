@@ -1,5 +1,3 @@
-"use client";
-
 import { UserMenu, type UserMenuLink } from "@/lib/auth/components";
 
 const DownloadIcon = () => {
