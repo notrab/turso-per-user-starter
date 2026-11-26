@@ -1,8 +1,8 @@
-# Turso Per User Starter
+# SQLite Per User Starter
 
-A Next.js application that demonstrates how to use the [Turso](https://turso.tech) Platforms API to create a database per user.
+A Next.js application that gives every user their own SQLite database. Databases can be created on [Turso](https://turso.tech) or [Bunny Database](https://bunny.net/database), and sign-in can use [Clerk](https://clerk.com) or [Better Auth](https://www.better-auth.com).
 
-![Turso Per User Starter Template](/app/opengraph-image.png)
+![SQLite Per User Starter Template](/app/opengraph-image.png)
 
 ## Demo
 
@@ -14,11 +14,12 @@ The app below uses a database per user, and is powered by Turso.
 
 Deploy your own Turso powered platform in a few easy steps...
 
-- [Create a Database](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-per-user-starter%2Fmain%2Fdump.sql)
+- [Create the control database](https://sqlite.new?dump=https%3A%2F%2Fraw.githubusercontent.com%2Fnotrab%2Fturso-per-user-starter%2Fmain%2Fdump.sql)
 
+  - This database records which database belongs to which user. Each user's own database is created automatically when they sign up.
   - Once the database is created, you'll be presented with details about your database, and **Connect** details
   - Note down the following (you'll need these later):
-    - Database name
+    - Database URL
     - Org name
     - Group Token (**Create Group Token** -> **Create Token**)
     - Platform API Token (**Create Platform API Token** -> **Insert memorable name** -> **Create Token**))
@@ -28,13 +29,14 @@ Deploy your own Turso powered platform in a few easy steps...
   - Note down the following (you'll need these later):
     - Public key
     - Secret key
-- [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnotrab%2Fturso-per-user-starter&env=NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,TURSO_API_TOKEN,TURSO_ORG,TURSO_DATABASE_NAME,TURSO_GROUP_AUTH_TOKEN&demo-title=Turso%20Per%20User%20Starter&demo-description=Create%20a%20database%20per%20user&demo-image=https://raw.githubusercontent.com/notrab/turso-per-user-starter/28373b4c9c74f814e3749525ee3d53b603176834/app/opengraph-image.png&demo-url=https%3A%2F%2Fturso-per-user-starter.vercel.app)
+- [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnotrab%2Fturso-per-user-starter&env=NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,CLERK_SECRET_KEY,CONTROL_DATABASE_URL,CONTROL_DATABASE_AUTH_TOKEN,TURSO_API_TOKEN,TURSO_ORG,TURSO_GROUP_AUTH_TOKEN&demo-title=Turso%20Per%20User%20Starter&demo-description=Create%20a%20database%20per%20user&demo-image=https://raw.githubusercontent.com/notrab/turso-per-user-starter/28373b4c9c74f814e3749525ee3d53b603176834/app/opengraph-image.png&demo-url=https%3A%2F%2Fturso-per-user-starter.vercel.app)
   - Add the following environment variables (from the details you noted down earlier):
     - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` - Clerk public key
     - `CLERK_SECRET_KEY` - Clerk secret key
+    - `CONTROL_DATABASE_URL` - Control database URL
+    - `CONTROL_DATABASE_AUTH_TOKEN` - Group Token (the control database is in the same group)
     - `TURSO_API_TOKEN` - Platform API Token
     - `TURSO_ORG` - Org name
-    - `TURSO_DATABASE_NAME` - Database name
     - `TURSO_GROUP_AUTH_TOKEN` - Group Token
   - Click **Deploy** and you're done!
 
@@ -69,24 +71,25 @@ Start building your Turso powered platform in a few simple steps...
    </details>
 
 3. <details>
-   <summary>Create a new Turso database with Turso</summary>
+   <summary>Create the control database</summary>
 
-   Follow the instructions to install the [Turso CLI](https://docs.turso.tech/cli/installation), and then run the following:
+   The control database records which database belongs to which user. Follow the instructions to install the [Turso CLI](https://docs.turso.tech/cli/installation), and then run the following:
 
    ```bash
-   turso db create <database-name>
+   turso db create control
+   turso db show control --url
    ```
 
-   > Alternatively, you can [sign up](https://app.turso.tech) on the web, and create a new database from there.
-
-   Now update `.env` to include your organization, and database name:
+   Now update `.env` with your organization and the control database URL:
 
    ```bash
    TURSO_ORG=
-   TURSO_DATABASE_NAME=
+   CONTROL_DATABASE_URL=
    ```
 
    > The `TURSO_ORG` can be your personal username, or the name of any organization you have with other users.
+
+   > Working offline? Set `CONTROL_DATABASE_URL=file:control.db` and `DB_PROVIDER=local` to keep everything in local SQLite files instead.
 
    </details>
 
@@ -96,29 +99,35 @@ Start building your Turso powered platform in a few simple steps...
    Run the following:
 
    ```bash
-   turso group tokens create <database-name>
+   turso group tokens create default
    ```
 
-   Now update `.env` to include the group token:
+   Now update `.env` to include the group token. The control database is in the same group, so it uses the same token:
 
    ```bash
    TURSO_GROUP_AUTH_TOKEN=
+   CONTROL_DATABASE_AUTH_TOKEN=
    ```
 
-   > If you didn't already have one, a new group will be created for you with the name `default`.
+   > If you didn't already have one, a new group will be created for you with the name `default`. To use another group, set `TURSO_GROUP`.
 
    </details>
 
 5. <details>
    <summary>Run database migrations</summary>
 
-   Run the following:
+   Set up the control database:
 
    ```bash
-   npm run db:migrate
+   npm run db:control:migrate
    ```
 
-   > If you make changes to `db/schema.ts`, make sure to run `npm run db:generate` to create the migrations, and `npm run db:migrate` to apply them.
+   Each user's database is migrated automatically when it's created. If you change `db/tenant/schema.ts`, generate a migration and apply it to every existing user's database:
+
+   ```bash
+   npm run db:tenant:generate
+   npm run db:tenant:migrate
+   ```
 
    </details>
 
@@ -165,6 +174,59 @@ Start building your Turso powered platform in a few simple steps...
    Now open [http://localhost:3000](http://localhost:3000) with your browser to try out the app!
 
     </details>
+
+## Using Better Auth
+
+Instead of Clerk, you can run your own auth with [Better Auth](https://www.better-auth.com). Users and sessions are stored in the control database, next to the record of each user's database, so there's no extra service to sign up for.
+
+1. Set the following in `.env`:
+
+   ```bash
+   AUTH_PROVIDER=better-auth
+   BETTER_AUTH_SECRET= # openssl rand -base64 32
+   BETTER_AUTH_URL=http://localhost:3000
+   ```
+
+   The Clerk variables aren't needed.
+
+2. Run `npm run db:control:migrate` if you haven't already. It creates the Better Auth tables.
+
+Users sign up with an email and password. To add **Continue with GitHub**, create a [GitHub OAuth app](https://github.com/settings/developers) with the callback URL `<BETTER_AUTH_URL>/api/auth/callback/github`, then set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
+
+Each user's database is created when they sign up. If that fails, it's retried on their next visit.
+
+The Better Auth setup lives in `lib/auth/providers/better-auth/`. Add plugins (email verification, passkeys, organizations and so on) in `auth.ts`. If a plugin needs extra columns, add them to `db/control/auth-schema.ts` and run `npm run db:control:generate`.
+
+## Using Bunny Database
+
+Each user's database can be created on [Bunny Database](https://bunny.net/database) instead of Turso. Both run libSQL, so the app code is the same.
+
+1. Create the control database and a token for it with the [bunny CLI](https://bunny.net/docs/cli):
+
+   ```bash
+   bunny db create --name control --primary DE --token
+   ```
+
+   Set `CONTROL_DATABASE_URL` and `CONTROL_DATABASE_AUTH_TOKEN` from the output, then run `npm run db:control:migrate`.
+
+2. Set the following in `.env`:
+
+   ```bash
+   DB_PROVIDER=bunny
+   BUNNYNET_API_KEY=
+   BUNNY_DB_STORAGE_REGION=eu-west-1
+   BUNNY_DB_PRIMARY_REGIONS=DE
+   TENANT_TOKEN_ENCRYPTION_KEY= # openssl rand -base64 32
+   ```
+
+   The `TURSO_*` variables aren't needed for a new deployment.
+
+Things to know:
+
+- Bunny issues a token per database. Tokens are stored encrypted in the control database with `TENANT_TOKEN_ENCRYPTION_KEY`, so keep that key safe and don't change it, or stored tokens can't be read.
+- During the Public Preview an account can have 50 databases, of up to 1 GB each. One database per user means you'll reach that quickly, so ask [bunny.net support](https://support.bunny.net) to raise it before launching. Signups past the limit fail with a message saying so.
+- Bunny has no export endpoint, so **Download my data** builds the SQL dump over a normal database connection.
+- Users who already have a database stay on the provider they were created with. Changing `DB_PROVIDER` only affects new users. If you're moving an existing Turso deployment, keep the `TURSO_*` variables set so existing users' databases are still found and used.
 
 ## Optional: Webhook setup
 

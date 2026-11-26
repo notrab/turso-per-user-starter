@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import * as schema from "@/db/schema";
-import { getDatabaseClient } from "@/app/utils";
+import * as schema from "@/db/tenant/schema";
+import { getDatabaseClient } from "@/lib/tenancy";
 import { eq, sql } from "drizzle-orm";
 
 export type TodoItem = {

@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { InferSelectModel } from "drizzle-orm";
 
-import * as schema from "@/db/schema";
+import * as schema from "@/db/tenant/schema";
 import { removeTodo, toggleTodo } from "./actions";
 
 type Todo = InferSelectModel<typeof schema.todos>;

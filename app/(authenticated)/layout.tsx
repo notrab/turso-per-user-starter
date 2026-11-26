@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { checkDatabaseExists } from "../utils";
+import { hasReadyDatabase } from "@/lib/tenancy";
 import { Header } from "./header";
 
 export default async function Layout({
@@ -8,7 +8,7 @@ export default async function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const databaseExists = await checkDatabaseExists();
+  const databaseExists = await hasReadyDatabase();
 
   if (!databaseExists) redirect("/welcome");
 

@@ -1,6 +1,4 @@
-"use client";
-
-import { UserButton as ClerkUserButton } from "@clerk/nextjs";
+import { UserMenu, type UserMenuLink } from "@/lib/auth/components";
 
 const DownloadIcon = () => {
   return (
@@ -26,23 +24,19 @@ const GithubIcon = () => {
   );
 };
 
+const links: UserMenuLink[] = [
+  { label: "Download my data", href: "/dump.sql", icon: <DownloadIcon /> },
+  {
+    label: "Star repository",
+    href: "https://github.com/notrab/turso-per-user-starter",
+    icon: <GithubIcon />,
+  },
+];
+
 export function UserButton() {
   return (
     <header>
-      <ClerkUserButton>
-        <ClerkUserButton.MenuItems>
-          <ClerkUserButton.Link
-            labelIcon={<DownloadIcon />}
-            label="Download my data"
-            href="/dump.sql"
-          />
-          <ClerkUserButton.Link
-            labelIcon={<GithubIcon />}
-            label="Star repository"
-            href="https://github.com/notrab/turso-per-user-starter"
-          />
-        </ClerkUserButton.MenuItems>
-      </ClerkUserButton>
+      <UserMenu links={links} />
     </header>
   );
 }

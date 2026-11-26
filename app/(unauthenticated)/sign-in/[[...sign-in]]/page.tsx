@@ -1,5 +1,5 @@
-import { SignIn } from "@clerk/nextjs";
+import { SignInForm } from "@/lib/auth/components";
 
 export default function Page() {
-  return <SignIn path="/sign-in" fallbackRedirectUrl="/welcome" />;
+  return <SignInForm redirectTo="/welcome" />;
 }

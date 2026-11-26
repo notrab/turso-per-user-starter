@@ -1,4 +1,4 @@
-import { getDatabaseClient } from "@/app/utils";
+import { getDatabaseClient } from "@/lib/tenancy";
 import { TodoList } from "./todo-list";
 
 export async function Todos() {

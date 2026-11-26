@@ -2,21 +2,27 @@
   "name": "turso-platforms-starter",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:control:generate": "drizzle-kit generate --config drizzle.control.config.ts",
+    "db:control:migrate": "drizzle-kit migrate --config drizzle.control.config.ts",
+    "db:control:studio": "drizzle-kit studio --config drizzle.control.config.ts",
+    "db:tenant:generate": "drizzle-kit generate --config drizzle.tenant.config.ts",
+    "db:tenant:migrate": "tsx scripts/migrate-tenants.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.3.3",
     "@libsql/client": "^0.14.0",
     "@next/env": "^14.2.11",
     "@tursodatabase/api": "^1.8.1",
-    "drizzle-orm": "^0.35.1",
+    "better-auth": "^1.7.28",
+    "drizzle-orm": "^0.45.4",
     "md5": "^2.3.0",
     "next": "^14.2.11",
     "react": "^18.3.1",
@@ -28,11 +34,12 @@
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.6",
     "@types/react-dom": "^18",
-    "drizzle-kit": "^0.26.2",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.11",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.11",
+    "tsx": "^4.23.15",
     "typescript": "^5.6.2"
   }
 }

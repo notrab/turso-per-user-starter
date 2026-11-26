@@ -36,3 +36,10 @@ yarn-error.log*
 next-env.d.ts
 
 .env
+
+# local tenant and control databases
+.tenants/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
