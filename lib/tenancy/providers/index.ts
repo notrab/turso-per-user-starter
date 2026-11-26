@@ -1,25 +1,34 @@
 import type { DatabaseProvider } from "../types";
+import { createLocalProvider } from "./local";
 import { createTursoProvider } from "./turso";
 
-const providers: Record<string, () => DatabaseProvider> = {
+const factories: Record<string, () => DatabaseProvider> = {
   turso: createTursoProvider,
+  local: createLocalProvider,
 };
 
-let provider: DatabaseProvider | undefined;
+const instances = new Map<string, DatabaseProvider>();
 
-/** The provider named by DB_PROVIDER. Defaults to turso. */
-export function getDatabaseProvider(): DatabaseProvider {
-  if (provider) return provider;
+/**
+ * A database provider by name. Defaults to DB_PROVIDER, then turso.
+ * Existing databases are opened with the provider recorded in the registry,
+ * so changing DB_PROVIDER only affects new users.
+ */
+export function getDatabaseProvider(
+  name: string = process.env.DB_PROVIDER || "turso",
+): DatabaseProvider {
+  const cached = instances.get(name);
+  if (cached) return cached;
 
-  const name = process.env.DB_PROVIDER || "turso";
-  const create = providers[name];
+  const create = factories[name];
 
   if (!create) {
     throw new Error(
-      `Unknown DB_PROVIDER "${name}". Supported: ${Object.keys(providers).join(", ")}`,
+      `Unknown database provider "${name}". Supported: ${Object.keys(factories).join(", ")}`,
     );
   }
 
-  provider = create();
+  const provider = create();
+  instances.set(name, provider);
   return provider;
 }

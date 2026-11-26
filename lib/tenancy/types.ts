@@ -4,6 +4,8 @@ export type TenantDatabase = {
   id: string;
   /** libSQL connection URL, e.g. libsql://… */
   url: string;
+  /** Per-database token, for providers that issue one (Bunny). */
+  authToken?: string;
 };
 
 export type DatabaseCredentials = {
@@ -11,34 +13,26 @@ export type DatabaseCredentials = {
   authToken?: string;
 };
 
-export type ProvisionedDatabase = TenantDatabase & {
-  /** Set by providers that issue a token per database (Bunny). */
-  authToken?: string;
-};
-
 /**
  * Contract every database provider implements. Providers only manage
- * databases. Schemas, naming and users are handled by lib/tenancy.
+ * databases. Users, naming, schemas and the registry live in lib/tenancy.
  */
 export interface DatabaseProvider {
   readonly name: string;
 
   /** Creates a database and returns where it lives. */
-  create(name: string): Promise<ProvisionedDatabase>;
+  create(name: string): Promise<TenantDatabase>;
 
-  /** Whether the database still exists at the provider. */
-  exists(db: TenantDatabase): Promise<boolean>;
+  /**
+   * Finds an existing database by name, or returns null. Used to recover
+   * a database an earlier, interrupted attempt created. Providers with
+   * per-database tokens issue a fresh one here.
+   */
+  find(name: string): Promise<TenantDatabase | null>;
 
   /** What a libSQL client needs to connect to the database. */
   credentials(db: TenantDatabase): Promise<DatabaseCredentials>;
 
   /** SQL dump of the database, or null when there's nothing to export. Optional. */
   dump?(db: TenantDatabase): Promise<string | null>;
-
-  /**
-   * Works out where a database lives from its name, without an API call.
-   * Only providers with predictable URLs (Turso) can do this. The tenant
-   * registry replaces it in phase 2.
-   */
-  locate(name: string): TenantDatabase;
 }

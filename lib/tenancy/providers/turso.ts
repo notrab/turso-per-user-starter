@@ -8,54 +8,56 @@ function requireEnv(name: string): string {
   return value;
 }
 
-export function createTursoProvider(): DatabaseProvider {
-  const org = requireEnv("TURSO_ORG");
-  const turso = createClient({ token: requireEnv("TURSO_API_TOKEN"), org });
+// The SDK's TursoClientError (which carries `status`) isn't exported at
+// runtime, and responses without a JSON body throw a plain Error instead.
+function isNotFound(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
+  return (
+    (error as Error & { status?: number }).status === 404 ||
+    /Status 404\b/.test(error.message)
+  );
+}
 
-  const locate = (name: string): TenantDatabase => ({
-    id: name,
-    url: `libsql://${name}-${org}.turso.io`,
+export function createTursoProvider(): DatabaseProvider {
+  const turso = createClient({
+    token: requireEnv("TURSO_API_TOKEN"),
+    org: requireEnv("TURSO_ORG"),
   });
+  const group = process.env.TURSO_GROUP || "default";
+
+  const toTenantDatabase = (db: {
+    name: string;
+    hostname: string;
+  }): TenantDatabase => ({ id: db.name, url: `libsql://${db.hostname}` });
+
+  // Every database in the group shares one token, so nothing is stored per database.
+  const groupToken = () => requireEnv("TURSO_GROUP_AUTH_TOKEN");
 
   return {
     name: "turso",
 
-    locate,
-
     async create(name) {
-      await turso.databases.create(name, {
-        group: "default",
-        seed: {
-          type: "database",
-          name: requireEnv("TURSO_DATABASE_NAME"),
-        },
-      });
-
-      return locate(name);
+      return toTenantDatabase(await turso.databases.create(name, { group }));
     },
 
-    async exists(db) {
+    async find(name) {
       try {
-        await turso.databases.get(db.id);
-        return true;
+        return toTenantDatabase(await turso.databases.get(name));
       } catch (error) {
-        console.error("Error checking database existence:", error);
-        return false;
+        if (isNotFound(error)) return null;
+        throw error;
       }
     },
 
-    // Every database in the group shares one token.
     async credentials(db) {
-      return { url: db.url, authToken: process.env.TURSO_GROUP_AUTH_TOKEN };
+      return { url: db.url, authToken: groupToken() };
     },
 
     async dump(db) {
       const url = db.url.replace(/^libsql:/, "https:") + "/dump";
 
       const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${process.env.TURSO_GROUP_AUTH_TOKEN}`,
-        },
+        headers: { Authorization: `Bearer ${groupToken()}` },
       });
 
       return response.ok ? response.text() : null;

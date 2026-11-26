@@ -1,31 +1,25 @@
 import { redirect } from "next/navigation";
 
 import { requireUserId } from "@/lib/auth";
-import { checkDatabaseExists, createUserDatabase } from "@/lib/tenancy";
+import { provisionTenant } from "@/lib/tenancy";
+
+// Creating and migrating a database can take a few seconds.
+export const maxDuration = 60;
 
 export async function GET() {
   const userId = await requireUserId();
 
-  const databaseExists = await checkDatabaseExists();
+  const result = await provisionTenant(userId);
 
-  if (databaseExists) {
-    return redirect("/dashboard");
+  if (result.status === "ready") redirect("/dashboard");
+
+  if (result.status === "failed") {
+    return new Response("Error creating database", { status: 500 });
   }
 
-  try {
-    const success = await createUserDatabase(userId);
-
-    if (!success) {
-      return new Response("Error creating database", {
-        status: 500,
-      });
-    }
-  } catch (err) {
-    console.error("Error creating database:", err);
-    return new Response("Error occurred", {
-      status: 500,
-    });
-  }
-
-  redirect("/dashboard");
+  // Another request (usually the sign-up webhook) is creating it. Check again shortly.
+  return new Response(
+    `<!doctype html><meta http-equiv="refresh" content="2"><title>Setting up</title><p>Setting up your database…</p>`,
+    { status: 202, headers: { "Content-Type": "text/html; charset=utf-8" } },
+  );
 }

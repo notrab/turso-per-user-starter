@@ -3,7 +3,7 @@
 import { useOptimistic } from "react";
 import { InferSelectModel } from "drizzle-orm";
 
-import * as schema from "@/db/schema";
+import * as schema from "@/db/tenant/schema";
 import { Todo } from "./todo";
 import { Form } from "./form";
 import { addTodo, removeTodo, toggleTodo } from "./actions";
